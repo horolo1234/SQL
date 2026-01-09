@@ -172,7 +172,6 @@ SELECT e.emp_id,
 		 l.local_name,
 		 n.national_name
 FROM employee e
-INNER JOIN job j ON e.job_code = j.job_code
 INNER JOIN department d ON e.dept_code = d.dept_id
 INNER JOIN location l ON d.location_id = l.local_code
 INNER JOIN national n ON l.national_code = n.national_code;
@@ -186,7 +185,6 @@ SELECT e.emp_id,
 		 n.national_name,
 		 s.sal_level
 FROM employee e
-INNER JOIN job j ON e.job_code = j.job_code
 INNER JOIN department d ON e.dept_code = d.dept_id
 INNER JOIN location l ON d.location_id = l.local_code
 INNER JOIN national n ON l.national_code = n.national_code
@@ -203,6 +201,18 @@ INNER JOIN job j ON e.job_code = j.job_code
 INNER JOIN department d ON e.dept_code = d.dept_id
 INNER JOIN location l ON d.location_id = l.local_code;
 
+-- 직원들의 직원명, 직급명, 부서명, 지역명을 조회하세요.
+-- 부서가 없는 직원들도 조회하려면 department, locatial  모두 left outer join 해야함
+SELECT e.emp_name,
+		 j.job_name,
+		 d.dept_title,
+		 l.local_name
+FROM employee e
+INNER JOIN job j ON e.job_code = j.job_code
+LEFT OUTER JOIN department d ON e.dept_code = d.dept_id
+LEFT OUTER JOIN location l ON d.location_id = l.local_code;
+
+
 
 -- 한국과 일본에서 근무하는 직원들의 직원명, 부서명, 지역명, 근무 국가를 조회하세요.
 SELECT e.emp_name,
@@ -215,26 +225,3 @@ INNER JOIN department d ON e.dept_code = d.dept_id
 INNER JOIN location l ON d.location_id = l.local_code
 INNER JOIN national n ON l.national_code = n.national_code
 WHERE n.national_name IN ("한국","일본");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
